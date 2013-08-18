@@ -12,6 +12,10 @@ class ShouldNotExpr {
         this.lhs = lhs;
     }
     
+    public function throwException() {
+        lhs();
+    }
+
     public function eql(rhs: Dynamic) {
         if(Type.getClassName(Type.getClass(lhs)) !=  
            Type.getClassName(Type.getClass(rhs))) {
@@ -34,6 +38,22 @@ class ShouldExpr {
 
     public function new(lhs: Dynamic) {
         this.lhs = lhs;
+    }
+
+    public function throwException(?e: Dynamic) {
+        var thrown = false;
+        var exception: Dynamic = null;
+        try {
+            lhs();
+        } catch(e: Dynamic) {
+            exception = e;
+            thrown = true;
+        }
+        if(!thrown) {
+            throw 'Expected to throw';
+        }
+        if(e != null) 
+            new ShouldExpr(exception).eql(e);
     }
 
     public function eql(rhs: Dynamic) {
