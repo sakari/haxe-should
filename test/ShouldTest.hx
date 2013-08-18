@@ -121,6 +121,37 @@ class ShouldTest {
         [1, 2].should().not.eql([1, 2, 3]);
     }
 
+    @Test
+    public function test_enum_matching() {
+        Foo(1).should().eql(Foo(1));
+    }
+
+    @Test
+    public function test_enum_matching_throws_on_fail() {
+        var x = false;
+        try {
+            Foo(1).should().eql(Foo(2));
+        } catch(e: Dynamic) {
+            x = true;
+        }
+        Assert.isTrue(x);
+    }
+
+    @Test
+    public function test_enum_not_matching() {
+        Foo(1).should().not.eql(Bar(1));
+    }
+
+    @Test
+    public function test_enum_matching_with_different_args() {
+        Foo(1).should().not.eql(Foo(2));
+    }
+
+}
+
+enum TestEnum {
+    Foo(p: Int);
+    Bar(v: Int);
 }
 
 private class TestObject {
