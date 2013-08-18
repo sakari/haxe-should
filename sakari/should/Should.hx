@@ -52,7 +52,13 @@ class ShouldExpr {
             new ShouldExpr(exception).eql(e);
     }
 
-    public function eql(rhs: Dynamic) {
+    public function eql(rhs: Dynamic, ?eql: Dynamic -> Dynamic -> Bool) {
+        if(eql != null) {
+            if(!eql(lhs, rhs)) {
+                throw 'assert failed';
+            }
+            return;
+        }
         if(!Compare.eql(lhs, rhs)) {
             throw 'assert failed';
         }

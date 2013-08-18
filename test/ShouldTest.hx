@@ -147,6 +147,14 @@ class ShouldTest {
         Foo(1).should().not.eql(Foo(2));
     }
 
+    @Test
+    public function test_passing_comparison_function() {
+        1.should().eql(2, function(l, r) {
+                Assert.isTrue(l == 1);
+                Assert.isTrue(r == 2);
+                return true;
+            });
+    }
 }
 
 enum TestEnum {
