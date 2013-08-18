@@ -1,0 +1,10 @@
+{
+    "name": "should",
+    "url": "",
+    "license": "MIT",
+    "tags": ["testing", "should"],
+    "description": "Should style assertions",
+    "version": "0.0.1",
+    "releasenote": "",
+    "contributors": [""]
+}
