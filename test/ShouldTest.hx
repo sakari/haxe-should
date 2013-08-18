@@ -155,9 +155,35 @@ class ShouldTest {
                 return true;
             });
     }
+
+    @Test
+    public function test_passing_comparison_method_name() {
+        var p = new ComparableObject(1);
+        var q = new ComparableObject(1);
+        p.should().eql(q, 'equalityTest');
+    }
+
+    @Test
+    public function test_passing_comparison_method_name_to_not() {
+        var p = new ComparableObject(1);
+        var q = new ComparableObject(2);
+        p.should().not.eql(q, 'equalityTest');
+    }
 }
 
-enum TestEnum {
+private class ComparableObject {
+    private var i: Int;
+
+    public function equalityTest(rhs) {
+        return i == rhs.i;
+    }
+
+    public function new(i) {
+        this.i = i;
+    }
+}
+
+private enum TestEnum {
     Foo(p: Int);
     Bar(v: Int);
 }

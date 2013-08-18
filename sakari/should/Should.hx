@@ -16,8 +16,8 @@ class ShouldNotExpr {
         lhs();
     }
 
-    public function eql(rhs: Dynamic) {
-        if(Compare.eql(lhs, rhs)) {
+    public function eql(rhs: Dynamic, ?eql: Dynamic) {
+        if(Compare.eql(lhs, rhs, eql)) {
             throw 'assert failed';
         }
     }
@@ -52,21 +52,25 @@ class ShouldExpr {
             new ShouldExpr(exception).eql(e);
     }
 
-    public function eql(rhs: Dynamic, ?eql: Dynamic -> Dynamic -> Bool) {
-        if(eql != null) {
-            if(!eql(lhs, rhs)) {
-                throw 'assert failed';
-            }
-            return;
-        }
-        if(!Compare.eql(lhs, rhs)) {
+    public function eql(rhs: Dynamic, ?eql: Dynamic) {
+        if(!Compare.eql(lhs, rhs, eql)) {
             throw 'assert failed';
         }
     }
 }
 
 private class Compare {
-    public static function eql(lhs, rhs) {
+    public static function eql(lhs, rhs, ?eql: Dynamic) {
+        if(eql != null) {
+            if(Reflect.isFunction(eql)) {
+                return eql(lhs, rhs);
+            }
+            if(Type.getClassName(Type.getClass(eql)) == 'String') {
+                return Reflect.callMethod(lhs, Reflect.field(lhs, eql), [rhs]);
+            }
+            throw 'illegal equality test';
+        }
+
         if(!Compare.isComparable(lhs)) {
             if(lhs != rhs) {
                 return false;
