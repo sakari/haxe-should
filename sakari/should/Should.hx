@@ -17,11 +17,7 @@ class ShouldNotExpr {
     }
 
     public function eql(rhs: Dynamic) {
-        if(Type.getClassName(Type.getClass(lhs)) !=  
-           Type.getClassName(Type.getClass(rhs))) {
-            return;
-        }
-        if(Std.string(lhs) == Std.string(rhs)) {
+        if(Compare.eql(lhs, rhs)) {
             throw 'assert failed';
         }
     }
@@ -57,12 +53,38 @@ class ShouldExpr {
     }
 
     public function eql(rhs: Dynamic) {
-        if(Std.string(rhs) != Std.string(lhs)) {
+        if(!Compare.eql(lhs, rhs)) {
             throw 'assert failed';
+        }
+    }
+}
+
+private class Compare {
+    public static function eql(lhs, rhs) {
+        if(!Compare.isComparable(lhs)) {
+            if(lhs != rhs) {
+                return false;
+            }
+            return true;
+        }
+        
+        if(Std.string(rhs) != Std.string(lhs)) {
+            return false;
         }
         if(Type.getClassName(Type.getClass(lhs)) !=  
            Type.getClassName(Type.getClass(rhs))) {
-            throw 'assert failed';
+            return false;
         }
+        return true;
+    }
+    public static function isComparable(a: Dynamic) {
+        if(Reflect.isFunction(a)) {
+            return false;
+        }
+        if(!Reflect.isObject(a)) {
+            return true;
+        }
+        var c = Type.getClassName(Type.getClass(a));
+        return c == 'Array' || c == 'Map';
     }
 }

@@ -72,4 +72,58 @@ class ShouldTest {
         }
         Assert.isTrue(r);
     }
+
+    @Test
+    public function test_succeeds_if_same_objects() {
+        var a = new TestObject();
+        a.should().eql(a);
+    }
+
+    @Test
+    public function test_fails_if_not_same_objects() {
+        var a = new TestObject();
+        var b = new TestObject();
+        a.should().not.eql(b);
+    }
+
+    @Test
+    public function test_throws_if_not_same_objects() {
+        var a = new TestObject();
+        var b = new TestObject();
+        var x = false;
+
+        try {
+            a.should().eql(b);
+        } catch(e: Dynamic) {
+            x = true;
+        }
+        Assert.isTrue(x);
+    }
+
+    @Test
+    public function test_arrays_with_equal_content_are_equal() {
+        [1, 2].should().eql([1, 2]);
+    }
+
+    @Test
+    public function test_differing_arrays_fail() {
+        var x = false;
+        try {
+            [1].should().eql([1, 2]);
+        } catch(e: Dynamic) {
+            x = true;
+        }
+        Assert.isTrue(x);
+    }
+
+    @Test
+    public function test_non_matching_arrays() {
+        [1, 2].should().not.eql([1, 2, 3]);
+    }
+
+}
+
+private class TestObject {
+    public function new() {
+    }
 }
