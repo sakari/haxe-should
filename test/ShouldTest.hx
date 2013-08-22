@@ -1,7 +1,32 @@
 using sakari.should.Should;
+import sakari.should.Should;
 import massive.munit.Assert;
 
 class ShouldTest {
+    @Test
+    public function test_existance_check_succeeds() {
+        1.should().exist;
+    }
+
+    @Test
+    public function test_existance_check_fails_if_null() {
+        (function() {
+            Should.should(null).exist;
+        }).should().throwException();
+    }
+
+    @Test
+    public function test_negated_existance_check() {
+        Should.should(null).not.exist;
+    }
+
+    @Test
+    public function test_negated_existance_check_fails() {
+        (function() {
+            1.should().not.exist;
+        }).should().throwException();
+    }
+
     @Test
     public function test_integer_equality() {
         1.should().eql(1);
