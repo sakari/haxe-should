@@ -7,7 +7,7 @@ class Should {
 }
 
 class ShouldNotExpr {
-    var lhs: Dynamic;
+    public var lhs: Dynamic;
     public var exist(get, never): ShouldNotExpr;
 
     private function get_exist() {
@@ -33,7 +33,7 @@ class ShouldNotExpr {
 }
 
 class ShouldExpr {
-    var lhs: Dynamic;
+    public var lhs: Dynamic;
 
     public var not(get, never): ShouldNotExpr;
     public var exist(get, never): ShouldExpr;

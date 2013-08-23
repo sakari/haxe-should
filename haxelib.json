@@ -1,10 +1,11 @@
 {
     "name": "should",
-    "url": "",
+    "url": "https://github.com/sakari/haxe-should",
     "license": "MIT",
-    "tags": ["testing", "should"],
+    "tags": ["testing", "should", "test", "assert"],
     "description": "Should style assertions",
     "version": "0.0.1",
     "releasenote": "",
-    "contributors": [""]
+    "user": "sakari",
+    "contributors": ["sakariij@gmail.com"]
 }
