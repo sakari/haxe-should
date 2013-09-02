@@ -33,3 +33,7 @@ Please do.
 # License
 
 MIT
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sakari/haxe-should/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
