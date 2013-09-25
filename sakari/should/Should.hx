@@ -27,7 +27,7 @@ class ShouldNotExpr {
 
     public function eql(rhs: Dynamic, ?eql: Dynamic) {
         if(Compare.eql(lhs, rhs, eql)) {
-            throw 'assert failed';
+            throw 'eql: $lhs $rhs';
         }
     }
 }
@@ -71,7 +71,7 @@ class ShouldExpr {
 
     public function eql(rhs: Dynamic, ?eql: Dynamic) {
         if(!Compare.eql(lhs, rhs, eql)) {
-            throw 'assert failed';
+            throw 'not eql: $lhs, $rhs';
         }
     }
 }
